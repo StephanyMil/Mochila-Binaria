@@ -1,8 +1,3 @@
-// Função para calcular o máximo de dois números
-int max(int a, int b) {
-    return (a > b) ? a : b;
-}
-
 #include <stdio.h>
 
 typedef struct {
@@ -11,6 +6,10 @@ typedef struct {
     float razao;
 } Item;
 
+// Função para calcular o máximo de dois números
+int max(int a, int b) {
+    return (a > b) ? a : b;
+}
 // Função de partição para o quicksort
 int partition(Item arr[], int low, int high) {
     float pivot = arr[high].razao;
