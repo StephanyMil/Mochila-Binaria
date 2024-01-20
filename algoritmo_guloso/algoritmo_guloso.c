@@ -1,22 +1,22 @@
 #include <stdio.h>
 
-typedef struct {
+typedef struct
+{
     int valor;
     int peso;
     float razao;
 } Item;
 
-// Função para calcular o máximo de dois números
-int max(int a, int b) {
-    return (a > b) ? a : b;
-}
 // Função de partição para o quicksort
-int partition(Item arr[], int low, int high) {
+int partition(Item arr[], int low, int high)
+{
     float pivot = arr[high].razao;
     int i = low - 1;
 
-    for (int j = low; j < high; j++) {
-        if (arr[j].razao >= pivot) {
+    for (int j = low; j < high; j++)
+    {
+        if (arr[j].razao >= pivot)
+        {
             i++;
             // Troca arr[i] e arr[j]
             Item temp = arr[i];
@@ -34,8 +34,10 @@ int partition(Item arr[], int low, int high) {
 }
 
 // Função de ordenação quicksort
-void quicksort(Item arr[], int low, int high) {
-    if (low < high) {
+void quicksort(Item arr[], int low, int high)
+{
+    if (low < high)
+    {
         int pi = partition(arr, low, high);
 
         quicksort(arr, low, pi - 1);
@@ -44,56 +46,72 @@ void quicksort(Item arr[], int low, int high) {
 }
 
 // Função que implementa o algoritmo guloso para o problema da mochila 0/1
-void Metodo_Guloso(int valor[], int peso[], int M, int n) {
+void Metodo_Guloso(int valor[], int peso[], int M, int n)
+{
     Item itens[n];
 
-    for(int i=0; i<n; i++){
+    for (int i = 0; i < n; i++)
+    {
         itens[i].valor = valor[i];
         itens[i].peso = peso[i];
-        itens[i].razao = (float)valor[i]/peso[i];
+        itens[i].razao = (float)valor[i] / peso[i];
     }
 
-    quicksort(itens, 0, n-1);
+    quicksort(itens, 0, n - 1);
 
-    int capacidade = M;  // Capacidade utilizada da mochila
-    int solucao[n];  // Vetor solução
+    int capacidade = M; // Capacidade utilizada da mochila
+    int solucao[n];     // Vetor solução
+    int valorTotal = 0; // Soma dos valores dos itens selecionados
 
     // Inicialização do vetor solução
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
+    {
         solucao[i] = 0;
     }
     // Loop: colocando cada item na mochila
-    for (int i = 0; i<n; i++) {
-        if (itens[i].peso <= capacidade) {
+    int i;
+
+    for (i = 0; i < n; i++)
+    {
+        if (itens[i].peso <= capacidade)
+        {
             solucao[i] = 1;
             capacidade -= itens[i].peso;
+            valorTotal += itens[i].valor; // Adiciona o valor do item selecionado ao total
         }
     }
     // Segundo loop: procurando itens restantes para preencher o espaço da mochila
-    for (int j = 0; j < n; j++) {
-        if (itens[j].peso <= capacidade) {
+    for (int j = i; j < n; j++)
+    {
+        if (itens[j].peso <= capacidade)
+        {
             solucao[j] = 1;
             capacidade -= itens[j].peso;
+            valorTotal += itens[j].valor; // Adiciona o valor do item selecionado ao total
         }
     }
     // Exibindo resultados
-    printf("Solução Gulosa:\n");
+    printf("Solucao Gulosa:\n");
     printf("Itens selecionados: ");
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
+    {
         printf("%d ", solucao[i]);
     }
     printf("\n");
+    printf("Valor total dos itens selecionados: %d\n", valorTotal); // Imprime o valor total dos itens selecionados
+    printf("\n");
 }
 
+int main()
+{
+    // Exemplo de entrada
+    int valor[] = {60, 100, 120};
+    int peso[] = {10, 20, 30};
+    int M = 50;
+    int n = sizeof(valor) / sizeof(valor[0]);
 
-int main() {
-    int valores[] = {60, 100, 120};
-    int pesos[] = {10, 20, 30};
-    int capacidade = 50;
-    int n = sizeof(valores) / sizeof(valores[0]);
-
-    Metodo_Guloso(valores, pesos, capacidade, n);
-    printf("\n");
+    // Chamada do método guloso
+    Metodo_Guloso(valor, peso, M, n);
 
     return 0;
 }
