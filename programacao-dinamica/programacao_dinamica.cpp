@@ -39,7 +39,7 @@ int mochila(int lucros[], int tamanhoLucros, int pesos[], int capacidade) {
   auto end_time = high_resolution_clock::now();
   auto duration = duration_cast<microseconds>(end_time - start_time);
 
-  cout << "Tempo de execução = " << duration.count() << " ms" << endl;
+  cout << "Tempo de execução = " << duration.count() << " μs" << endl;
   
   cout << "Lucro total da mochila = ";
 
