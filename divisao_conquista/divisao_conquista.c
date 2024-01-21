@@ -1,3 +1,10 @@
+#include <stdio.h>
+
+// Função para calcular o máximo de dois números
+int max(int a, int b) {
+    return (a > b) ? a : b;
+}
+
 int mochila_divisao_conquista(int valores[], int pesos[], int capacidade, int inicio, int fim) {
     if (inicio > fim) {
         return 0;
